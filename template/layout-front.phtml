@@ -31,6 +31,7 @@ $this->css($this->assetTheme('css/front.css'));
 $this->css($this->assetLocale('locale.css'));
 
 // Load front.js on footer
+$this->footScript()->appendFile($this->assetTheme('js/jquery.parallax.min.js'));
 $this->footScript()->appendFile($this->assetTheme('js/front.js'));
 
 // Apple icons
@@ -102,54 +103,36 @@ $breadcrumbs = $this->breadcrumb(
     <meta charset="<?php echo $charset; ?>">
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 </head>
-<body id="pi-<?php echo $module; ?>" class="pi-locale-<?php echo $locale; ?> pi-front">
+<body id="pi-<?php echo $module; ?>" class="pi-locale-<?php echo $locale; ?> pi-front" data-spy="scroll" data-target=".navbar-fixed-top" class="top">
+<nav class="navbar navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" data-toggle="collapse" data-target=".navbar-main-collapse" class="navbar-toggle">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a href="#page-top" class="navbar-brand page-scroll">
+                <img class="img-responsive logo" src="<?php echo $this->assetTheme('image/logo.png'); ?>" alt="<?php echo _escape($sitename); ?>">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-main-collapse">
+            <?php echo $navigation->menu()->setUlClass('nav navbar-nav navbar-left pi-navbar-nav clearfix'); ?>
+        </div>
+    </div>
+</nav>
+<header class="pi-header pi-header-half">
+    <div class="pi-header-body">
+        <?php if ($module == 'system') { ?>
+            <h1 class="classic">
+                <img src="<?php echo $this->assetTheme('image/header-center.png'); ?>" alt="<?php echo _escape($sitename); ?>">
+            </h1>
+        <?php } else { ?>
+            <h2 class="classic">
+                ByUs, Think out of box
+            </h2>
+        <?php } ?>
+    </div>
+</header>
 <?php if ($module == 'system') { ?>
-    <!-- Header: brand, slogan, user bar -->
-    <header class="pi-header">
-        <div class="pi-header-body clearfix">
-            <div class="pi-header-nav navbar navbar-default clearfix">
-                <div class="container-fluid">
-                    <div class="row" itemscope itemtype="https://schema.org/SiteNavigationElement">
-                        <nav class="col-md-12 col-xs-12 clearfix">
-                            <div class="navbar-header pi-header-left">
-                                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                    <i class="fa fa-bars"></i>
-                                </button>
-                                <?php if ($module == 'system') { ?>
-                                    <h1>
-                                        <a href="<?php echo Pi::url($this->url('home')); ?>" title="<?php echo _escape($sitename); ?>">
-                                            <img class="img-responsive" src="<?php echo $this->assetTheme('image/logo.png'); ?>" alt="<?php echo _escape($sitename); ?>">
-                                        </a>
-                                    </h1>
-                                <?php } else { ?>
-                                    <h2>
-                                        <a href="<?php echo Pi::url($this->url('home')); ?>" title="<?php echo _escape($sitename); ?>">
-                                            <img class="img-responsive" src="<?php echo $this->assetTheme('image/logo.png'); ?>" alt="<?php echo _escape($sitename); ?>">
-                                        </a>
-                                    </h2>
-                                <?php } ?>
-                            </div>
-                            <div class="navbar-collapse collapse pi-header-right">
-                                <?php echo $navigation->menu()->setUlClass('nav navbar-nav pi-navbar-nav clearfix'); ?>
-                            </div>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="pi-header-search clearfix">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-4 col-xs-12">
-                        <p class="text-center">
-                            <img class="img-responsive" src="<?php echo $this->assetTheme('image/header-center.png'); ?>" alt="<?php echo _escape($sitename); ?>">
-                        </p>
-                        <?php echo $this->widget('search-search'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
     <section class="pi-section">
         <div class="pi-section-process clearfix">
             <div class="container-fluid">
@@ -158,18 +141,18 @@ $breadcrumbs = $this->breadcrumb(
                         <div class="pi-section-title">
                             <h2 class="no-span">فرآیند ما</h2>
                         </div>
-                        <div class="pi-section-body clearfix text-center">
-                            <div class="col-md-3 col-xs-12">
+                        <div class="pi-section-body pi-section-icon clearfix text-center">
+                            <div class="col-md-3 col-xs-12 pi-section-box-divider">
                                 <img class="img-responsive" src="<?php echo $this->assetTheme('image/pi-section-process-1.png'); ?>" alt="">
                                 <h3>مشاوره</h3>
                                 <h4>Consultation</h4>
                             </div>
-                            <div class="col-md-3 col-xs-12">
+                            <div class="col-md-3 col-xs-12 pi-section-box-divider">
                                 <img class="img-responsive" src="<?php echo $this->assetTheme('image/pi-section-process-2.png'); ?>" alt="">
                                 <h3>نیازسنجی</h3>
                                 <h4>Needs Assessment</h4>
                             </div>
-                            <div class="col-md-3 col-xs-12">
+                            <div class="col-md-3 col-xs-12 pi-section-box-divider">
                                 <img class="img-responsive" src="<?php echo $this->assetTheme('image/pi-section-process-3.png'); ?>" alt="">
                                 <h3>ایده پردازی</h3>
                                 <h4>Idea making</h4>
@@ -210,7 +193,7 @@ $breadcrumbs = $this->breadcrumb(
                         <div class="pi-section-title">
                             <h2 class="no-span">خدمات</h2>
                         </div>
-                        <div class="pi-section-body clearfix text-center">
+                        <div class="pi-section-body pi-section-icon clearfix text-center">
                             <div class="col-md-3 col-xs-12">
                                 <img class="img-responsive" src="<?php echo $this->assetTheme('image/pi-section-service-1.png'); ?>" alt="">
                                 <h3>برندینگ</h3>
@@ -236,7 +219,7 @@ $breadcrumbs = $this->breadcrumb(
                 </div>
             </div>
         </div>
-        <div class="pi-section-portfolio clearfix row">
+        <div class="pi-section-portfolio clearfix">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 col-xs-12">
@@ -363,7 +346,7 @@ $breadcrumbs = $this->breadcrumb(
                         <div class="pi-section-title">
                             <h2 class="no-span">Why By Us ?</h2>
                         </div>
-                        <div class="pi-section-body clearfix text-center">
+                        <div class="pi-section-body pi-section-icon clearfix text-center">
                             <div class="col-md-3 col-xs-12">
                                 <img class="img-responsive" src="<?php echo $this->assetTheme('image/pi-section-why-1.png'); ?>" alt="">
                                 <h3>تفکر خارج از چهارچوب</h3>
@@ -417,48 +400,6 @@ $breadcrumbs = $this->breadcrumb(
         </div>
     </section>
 <?php } else { ?>
-    <header class="pi-header">
-        <div class="pi-header-body clearfix">
-            <div class="pi-header-nav navbar navbar-default clearfix">
-                <div class="container-fluid">
-                    <div class="row" itemscope itemtype="https://schema.org/SiteNavigationElement">
-                        <nav class="col-md-12 col-xs-12 clearfix">
-                            <div class="navbar-header pi-header-left">
-                                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                    <i class="fa fa-bars"></i>
-                                </button>
-                                <?php if ($module == 'system') { ?>
-                                    <h1>
-                                        <a href="<?php echo Pi::url($this->url('home')); ?>" title="<?php echo _escape($sitename); ?>">
-                                            <img class="img-responsive" src="<?php echo $this->assetTheme('image/logo.png'); ?>" alt="<?php echo _escape($sitename); ?>">
-                                        </a>
-                                    </h1>
-                                <?php } else { ?>
-                                    <h2>
-                                        <a href="<?php echo Pi::url($this->url('home')); ?>" title="<?php echo _escape($sitename); ?>">
-                                            <img class="img-responsive" src="<?php echo $this->assetTheme('image/logo.png'); ?>" alt="<?php echo _escape($sitename); ?>">
-                                        </a>
-                                    </h2>
-                                <?php } ?>
-                            </div>
-                            <div class="navbar-collapse collapse pi-header-right">
-                                <?php echo $navigation->menu()->setUlClass('nav navbar-nav pi-navbar-nav clearfix'); ?>
-                            </div>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="pi-header-search clearfix">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-4 col-xs-12">
-                        <?php echo $this->widget('search-search'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
     <!-- Page main content: breadcrumb, flash-messenger, blocks and module content -->
     <section class="pi-section">
         <div class="container">
